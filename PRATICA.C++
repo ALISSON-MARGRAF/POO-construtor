@@ -5,7 +5,7 @@ using namespace std;
 
 class ponto{
 
-    int x, y;
+    double x, y;
 
     public:
     
@@ -23,13 +23,18 @@ class reta{
     
     public:
     
-    reta(ponto p1, ponto p2){}
+    reta(ponto p1, ponto p2){ 
+
+        a = p1.getY() - p2.getY();
+        b = p2.getX() - p1.getX();
+        c = p1.getX() * p2.getY() - p1.getY() * p2.getX();
+    }
 
     //getters
     double getA(){return a;}
     double getB(){return b;}
     double getC(){return c;}
-    double distanciaParaPonto(ponto p){}
+    double distanciaParaPonto(ponto p){return fabs(a * p.getX() + b * p.getY() + c ) / sqrt(a*a + b*b);}
 };
 
 int main(){
@@ -39,7 +44,7 @@ int main(){
     cout << "Ponto A > "; 
     cin >> x >> y;
     ponto A(x,y);
-
+    
     cout << "Ponto B > ";
     cin >> x >> y;
     ponto B(x,y); 
@@ -50,8 +55,17 @@ int main(){
 
     cout << "Distancia AB " << A.distanciaParaPonto(B) << endl;
 
+    reta A1(A,B);
 
+    cout << "R: " << A1.getA() << "X ";
+    if(A1.getB() > 0){
+        cout << "+ " << A1.getB() << "Y "; 
+     }else cout << A1.getB() << "Y ";   
+    if(A1.getC() > 0){
+       cout << "+" << A1.getC() << " = 0"; 
+    }else cout << A1.getC() << " = 0" << endl;
 
+    cout << "Distancia RC = " << A1.distanciaParaPonto(C);
 
     return 0;
 }
